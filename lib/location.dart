@@ -8,7 +8,7 @@ class Location {
   Future<void> getCurrentLocation() async {
     try {
       await Permission.location.request();
-      LocationSettings locationSettings = const LocationSettings(
+      LocationSettings locationSettings = LocationSettings(
         accuracy: LocationAccuracy.low,
       );
       Position position = await Geolocator.getCurrentPosition(

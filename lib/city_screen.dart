@@ -8,7 +8,8 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
-  late String city;
+  String? city;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +35,8 @@ class _CityScreenState extends State<CityScreen> {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.all(20),
+              SizedBox(
+                width: 350,
                 child: TextField(
                   onChanged: (value) {
                     city = value;
@@ -58,6 +59,9 @@ class _CityScreenState extends State<CityScreen> {
                         borderSide: BorderSide.none),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 12,
               ),
               GestureDetector(
                 onTap: () {

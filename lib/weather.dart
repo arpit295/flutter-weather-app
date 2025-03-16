@@ -17,20 +17,6 @@ class WeatherModel {
     }
   }
 
-  Future<dynamic> getWeatherFromCoordinates(
-      double latitude, double longitude) async {
-    Response response = await get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=2aef7ea19f40efdede1d1990358a7a9c&units=metric'));
-
-    if (response.statusCode == 200) {
-      String data = response.body;
-      var decodeData = jsonDecode(data);
-      return decodeData;
-    } else {
-      print(response.statusCode);
-    }
-  }
-
   String getWeatherIcon(int id) {
     if (id < 300) {
       return '🌩';

@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:practice_clima/city_screen.dart';
 import 'package:practice_clima/weather.dart';
 import 'location.dart';
@@ -19,6 +21,9 @@ class _LocationScreenState extends State<LocationScreen> {
   String? weatherMessage;
 
   @override
+  double? latitude;
+  double? longitude;
+
   void initState() {
     super.initState();
     updateUI(widget.locationWeather);
@@ -46,13 +51,25 @@ class _LocationScreenState extends State<LocationScreen> {
     try {
       Location location = Location();
       await location.getCurrentLocation();
-      var weatherData = await weatherModel.getWeatherFromCoordinates(
-        location.latitude!,
-        location.longitude!,
-      );
+      latitude = location.latitude;
+      longitude = location.longitude;
+      var weatherData = await getWeatherFromCoordinates();
       updateUI(weatherData);
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<dynamic> getWeatherFromCoordinates() async {
+    Response response = await get(Uri.parse(
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=2aef7ea19f40efdede1d1990358a7a9c&units=metric'));
+
+    if (response.statusCode == 200) {
+      String data = response.body;
+      var decodeData = jsonDecode(data);
+      return decodeData;
+    } else {
+      print(response.statusCode);
     }
   }
 
